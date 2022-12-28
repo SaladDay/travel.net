@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="travel@localhost">
+  <database-model serializer="dbm" dbms="MYSQL" family-id="MYSQL" format-version="4.45">
+    <root id="1">
+      <DefaultCasing>lower/lower</DefaultCasing>
+      <DefaultEngine>InnoDB</DefaultEngine>
+      <DefaultTmpEngine>InnoDB</DefaultTmpEngine>
+      <ServerVersion>5.7.24</ServerVersion>
+    </root>
+    <schema id="2" parent="1" name="db1"/>
+    <schema id="3" parent="1" name="db2"/>
+    <schema id="4" parent="1" name="information_schema"/>
+    <schema id="5" parent="1" name="mysql"/>
+    <schema id="6" parent="1" name="performance_schema"/>
+    <schema id="7" parent="1" name="sys"/>
+    <schema id="8" parent="1" name="travel">
+      <Current>1</Current>
+    </schema>
+    <table id="9" parent="8" name="tab_category">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="10" parent="8" name="tab_favorite">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="11" parent="8" name="tab_route">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="12" parent="8" name="tab_route_img">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="13" parent="8" name="tab_seller">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <table id="14" parent="8" name="tab_user">
+      <Engine>InnoDB</Engine>
+      <CollationName>utf8_general_ci</CollationName>
+    </table>
+    <column id="15" parent="9" name="cid">
+      <AutoIncrement>9</AutoIncrement>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="16" parent="9" name="cname">
+      <DasType>varchar(100)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <index id="17" parent="9" name="PRIMARY">
+      <ColNames>cid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="18" parent="9" name="AK_nq_categoryname">
+      <ColNames>cname</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="19" parent="9" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="20" parent="9" name="AK_nq_categoryname">
+      <UnderlyingIndexName>AK_nq_categoryname</UnderlyingIndexName>
+    </key>
+    <column id="21" parent="10" name="rid">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="22" parent="10" name="date">
+      <DasType>date|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="23" parent="10" name="uid">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <foreign-key id="24" parent="10" name="FK_route_favorite">
+      <ColNames>rid</ColNames>
+      <RefColNames>rid</RefColNames>
+      <RefTableName>tab_route</RefTableName>
+    </foreign-key>
+    <foreign-key id="25" parent="10" name="FK_user_favorite">
+      <ColNames>uid</ColNames>
+      <RefColNames>uid</RefColNames>
+      <RefTableName>tab_user</RefTableName>
+    </foreign-key>
+    <index id="26" parent="10" name="PRIMARY">
+      <ColNames>rid
+uid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="27" parent="10" name="FK_user_favorite">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="28" parent="10" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="29" parent="11" name="rid">
+      <AutoIncrement>514</AutoIncrement>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="30" parent="11" name="rname">
+      <DasType>varchar(500)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="31" parent="11" name="price">
+      <DasType>double|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="32" parent="11" name="routeIntroduce">
+      <DasType>varchar(1000)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="33" parent="11" name="rflag">
+      <DasType>char(1)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <column id="34" parent="11" name="rdate">
+      <DasType>varchar(19)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="35" parent="11" name="isThemeTour">
+      <DasType>char(1)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>7</Position>
+    </column>
+    <column id="36" parent="11" name="count">
+      <DasType>int(11)|0s</DasType>
+      <DefaultExpression>0</DefaultExpression>
+      <Position>8</Position>
+    </column>
+    <column id="37" parent="11" name="cid">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>9</Position>
+    </column>
+    <column id="38" parent="11" name="rimage">
+      <DasType>varchar(200)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <column id="39" parent="11" name="sid">
+      <DasType>int(11)|0s</DasType>
+      <Position>11</Position>
+    </column>
+    <column id="40" parent="11" name="sourceId">
+      <DasType>varchar(50)|0s</DasType>
+      <Position>12</Position>
+    </column>
+    <foreign-key id="41" parent="11" name="FK_category_route">
+      <ColNames>cid</ColNames>
+      <RefColNames>cid</RefColNames>
+      <RefTableName>tab_category</RefTableName>
+    </foreign-key>
+    <foreign-key id="42" parent="11" name="FK_seller_route">
+      <ColNames>sid</ColNames>
+      <RefColNames>sid</RefColNames>
+      <RefTableName>tab_seller</RefTableName>
+    </foreign-key>
+    <index id="43" parent="11" name="PRIMARY">
+      <ColNames>rid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="44" parent="11" name="AK_nq_sourceId">
+      <ColNames>sourceId</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="45" parent="11" name="FK_category_route">
+      <ColNames>cid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <index id="46" parent="11" name="FK_seller_route">
+      <ColNames>sid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="47" parent="11" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="48" parent="11" name="AK_nq_sourceId">
+      <UnderlyingIndexName>AK_nq_sourceId</UnderlyingIndexName>
+    </key>
+    <column id="49" parent="12" name="rgid">
+      <AutoIncrement>2091</AutoIncrement>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="50" parent="12" name="rid">
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="51" parent="12" name="bigPic">
+      <DasType>varchar(200)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="52" parent="12" name="smallPic">
+      <DasType>varchar(200)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <foreign-key id="53" parent="12" name="FK_route_routeimg">
+      <ColNames>rid</ColNames>
+      <RefColNames>rid</RefColNames>
+      <RefTableName>tab_route</RefTableName>
+    </foreign-key>
+    <index id="54" parent="12" name="PRIMARY">
+      <ColNames>rgid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="55" parent="12" name="FK_route_routeimg">
+      <ColNames>rid</ColNames>
+      <Type>btree</Type>
+    </index>
+    <key id="56" parent="12" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <column id="57" parent="13" name="sid">
+      <AutoIncrement>2</AutoIncrement>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="58" parent="13" name="sname">
+      <DasType>varchar(200)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="59" parent="13" name="consphone">
+      <DasType>varchar(20)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="60" parent="13" name="address">
+      <DasType>varchar(200)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <index id="61" parent="13" name="PRIMARY">
+      <ColNames>sid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="62" parent="13" name="AK_Key_2">
+      <ColNames>sname</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="63" parent="13" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="64" parent="13" name="AK_Key_2">
+      <UnderlyingIndexName>AK_Key_2</UnderlyingIndexName>
+    </key>
+    <column id="65" parent="14" name="uid">
+      <AutoIncrement>1</AutoIncrement>
+      <DasType>int(11)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>1</Position>
+    </column>
+    <column id="66" parent="14" name="username">
+      <DasType>varchar(100)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>2</Position>
+    </column>
+    <column id="67" parent="14" name="password">
+      <DasType>varchar(32)|0s</DasType>
+      <NotNull>1</NotNull>
+      <Position>3</Position>
+    </column>
+    <column id="68" parent="14" name="name">
+      <DasType>varchar(100)|0s</DasType>
+      <Position>4</Position>
+    </column>
+    <column id="69" parent="14" name="birthday">
+      <DasType>date|0s</DasType>
+      <Position>5</Position>
+    </column>
+    <column id="70" parent="14" name="sex">
+      <DasType>char(1)|0s</DasType>
+      <Position>6</Position>
+    </column>
+    <column id="71" parent="14" name="telephone">
+      <DasType>varchar(11)|0s</DasType>
+      <Position>7</Position>
+    </column>
+    <column id="72" parent="14" name="email">
+      <DasType>varchar(100)|0s</DasType>
+      <Position>8</Position>
+    </column>
+    <column id="73" parent="14" name="status">
+      <DasType>char(1)|0s</DasType>
+      <Position>9</Position>
+    </column>
+    <column id="74" parent="14" name="code">
+      <DasType>varchar(50)|0s</DasType>
+      <Position>10</Position>
+    </column>
+    <index id="75" parent="14" name="PRIMARY">
+      <ColNames>uid</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="76" parent="14" name="AK_nq_username">
+      <ColNames>username</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <index id="77" parent="14" name="AK_nq_code">
+      <ColNames>code</ColNames>
+      <Type>btree</Type>
+      <Unique>1</Unique>
+    </index>
+    <key id="78" parent="14" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <Primary>1</Primary>
+      <UnderlyingIndexName>PRIMARY</UnderlyingIndexName>
+    </key>
+    <key id="79" parent="14" name="AK_nq_username">
+      <UnderlyingIndexName>AK_nq_username</UnderlyingIndexName>
+    </key>
+    <key id="80" parent="14" name="AK_nq_code">
+      <UnderlyingIndexName>AK_nq_code</UnderlyingIndexName>
+    </key>
+  </database-model>
+</dataSource>
