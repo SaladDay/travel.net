@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.saladday.travel.dao.mapper.UserMapper">
+    <insert id="save">
+        insert into tab_user (username, password, name, birthday, sex, telephone, email, status, code)
+        values (#{username},#{password},#{name},#{birthday},#{sex},#{telephone},#{email},#{status},#{code});
+    </insert>
+
+
+    <update id="updateStatus">
+        update tab_user set status = 'Y' where code = #{code};
+    </update>
+
+    <select id="findByUsername" resultType="cn.saladday.travel.domain.User">
+        select * from tab_user where username = #{username};
+    </select>
+
+    <select id="findByCode" resultType="cn.saladday.travel.domain.User">
+        select * from tab_user where code = #{code};
+    </select>
+
+    <select id="findByEmail" resultType="cn.saladday.travel.domain.User">
+        select * from tab_user where email = #{email};
+    </select>
+
+    <select id="findByUsernameAndPassword" resultType="cn.saladday.travel.domain.User">
+        select * from tab_user where username = #{username} and password = #{password};
+    </select>
+</mapper>

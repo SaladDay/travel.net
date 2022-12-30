@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.saladday.travel.dao.mapper.FavouriteMapper">
+    <insert id="addSingle">
+        INSERT INTO tab_favorite  VALUES(#{rid},#{date},#{uid})
+    </insert>
+
+    <delete id="removeSingle">
+        delete from tab_favorite where uid = #{uid} and rid = #{rid};
+    </delete>
+
+
+    <select id="findByUidAndRid" resultType="cn.saladday.travel.domain.Favourite">
+        select * from tab_favorite where uid = #{uid} and rid = #{rid};
+
+    </select>
+
+    <select id="countByRid" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tab_favorite WHERE rid = #{rid};
+    </select>
+
+    <select id="countByUid" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM tab_favorite WHERE uid = #{uid};
+    </select>
+
+    <select id="countByUidAndRname" resultType="java.lang.Integer">
+        <bind name="_rname" value="'%'+rname+'%'" ></bind>
+        SELECT COUNT(*) FROM tab_favorite,tab_route WHERE uid = #{uid} AND rname LIKE #{_rname} AND  tab_favorite.`rid`=tab_route.`rid`;
+    </select>
+
+    <select id="findByPage" resultType="cn.saladday.travel.domain.Route">
+        <bind name="_rname" value="'%'+rname+'%'" ></bind>
+        SELECT tab_route.*
+        FROM tab_favorite,tab_route
+        WHERE uid = #{uid} AND rname LIKE #{_rname} AND tab_favorite.`rid`=tab_route.`rid`
+        limit #{start},#{pageSize};
+    </select>
+</mapper>

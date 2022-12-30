@@ -14,10 +14,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @WebServlet("/category/*")
 public class CategoryServlet extends BaseServlet{
@@ -45,12 +42,18 @@ public class CategoryServlet extends BaseServlet{
                 //正常提取到数据了
                 //设置返回值为json
                 List<Category> categoryList = (List<Category>) info.getData();
-                categoryList.sort(new Comparator<Category>() {
+                Collections.sort(categoryList, new Comparator<Category>() {
                     @Override
                     public int compare(Category o1, Category o2) {
                         return o1.getCid()-o2.getCid();
                     }
                 });
+//                categoryList.sort(new Comparator<Category>() {
+//                    @Override
+//                    public int compare(Category o1, Category o2) {
+//                        return o1.getCid()-o2.getCid();
+//                    }
+//                });
 //                System.out.println("从sql中取出的数据");
 //                System.out.println(categoryList);
                 for (Category category : categoryList) {

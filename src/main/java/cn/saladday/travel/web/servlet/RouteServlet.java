@@ -127,7 +127,7 @@ public class RouteServlet extends BaseServlet{
           if(exist(pageSizeStr)){
                pageSize = Integer.parseInt(pageSizeStr);
           }else {
-               pageSize = 5;
+               pageSize = 15;
           }
 
           //调用FavouriteService 下的 resultInfo pageQuery(int uid,int currentPage,int PageSize)
