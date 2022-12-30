@@ -1,26 +1,45 @@
 package cn.saladday.travel.service.impl;
 
-import cn.saladday.travel.dao.UserDao;
-import cn.saladday.travel.dao.impl.UserDaoImpl;
+import cn.saladday.travel.dao.mapper.UserMapper;
 import cn.saladday.travel.domain.ResultInfo;
 import cn.saladday.travel.domain.User;
 import cn.saladday.travel.service.UserService;
 import cn.saladday.travel.util.MailUtils;
 import cn.saladday.travel.util.UuidUtil;
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
 //import com.sun.tools.javac.comp.Todo;
 
 public class UserServiceImpl implements UserService {
-    private UserDao dao = new UserDaoImpl();
-
+//    private UserDao dao = new UserDaoImpl();
+    private static SqlSessionFactory factory;
+    static {
+        try {
+            InputStream is = Resources.getResourceAsStream("mybatis-config.xml");
+            factory = new SqlSessionFactoryBuilder().build(is);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @Override
     public ResultInfo register(User user) {
+        SqlSession sqlSession = factory.openSession(true);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
         ResultInfo info = new ResultInfo();
 
         //判断用户是否已经存在->调用Dao User findByUsername(String username)
-        User username_user = dao.findByUsername(user.getUsername());
+//        User username_user = dao.findByUsername(user.getUsername());
+        User username_user = userMapper.findByUsername(user.getUsername());
+
         //判断邮箱是否已经存在->调用Dao User findByEmail(String email)
-        User email_user = dao.findByEmail(user.getEmail());
+//        User email_user = dao.findByEmail(user.getEmail());
+        User email_user = userMapper.findByEmail(user.getEmail());
         if (username_user != null) {
             //若存在直接返回false
             info.setFlag(false);
@@ -44,12 +63,14 @@ public class UserServiceImpl implements UserService {
             String content = "<a href='http://localhost/travel/user/active?code=" + user.getCode() + "'>旅游网，请点击激活</a>";
             boolean b = MailUtils.sendMail(user.getEmail(), content, "旅游网激活邮件");
 
-            if (b && dao.save(user)) {
+            if (b && userMapper.save(user)) {
+                sqlSession.close();
                 info.setFlag(true);
                 return info;
 
             } else{
                 //1.发送邮件错误2.dao错误
+                sqlSession.close();
                 info.setFlag(false);
                 info.setErrorMsg("激活邮件发送失败，请重试");
                 return info;
@@ -61,6 +82,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResultInfo active(String code) {
+        SqlSession sqlSession = factory.openSession(true);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+
         ResultInfo info = new ResultInfo();
         //查询code是否为null，如果是，视为恶意攻击，警告
         if (code == null) {
@@ -69,21 +93,24 @@ public class UserServiceImpl implements UserService {
             return info;
         }
         //调用Dao下的User findByCode(String code)
-        User _user = dao.findByCode(code);
+//        User _user = dao.findByCode(code);
         // 查询code是否有改用户，如果没有，视为恶意攻击，警告
+        User _user = userMapper.findByCode(code);
         if (_user == null) {
             info.setFlag(false);
             info.setErrorMsg("用户不存在，请勿对网站进行违法操作，违规者将承担法律责任");
             return info;
         }
         //如果有，调用Dao下的Boolean updateStatus(User user)
-        boolean b = dao.updateStatus(_user);
+//        boolean b = dao.updateStatus(_user);
+        boolean b = userMapper.updateStatus(_user);
         if (b) {
             info.setFlag(true);
         } else {
             info.setFlag(false);
             info.setErrorMsg("未知错误，请联系管理员");
         }
+        sqlSession.close();
         return info;
 
     }
@@ -91,9 +118,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public ResultInfo login(User loginUser) {
         ResultInfo info = new ResultInfo();
+        SqlSession sqlSession = factory.openSession(true);
+        UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
 
         //调用dao下的User findByUsernameAndPassword(User loginUser)
-        User user = dao.findByUsernameAndPassword(loginUser);
+//        User user = dao.findByUsernameAndPassword(loginUser);
+        User user = userMapper.findByUsernameAndPassword(loginUser);
+
 
         //判断是否存在该用户
         if(user == null){
@@ -106,12 +137,14 @@ public class UserServiceImpl implements UserService {
         if("N".equals(user.getStatus())){
             info.setFlag(false);
             info.setErrorMsg("账户未激活");
+            sqlSession.close();
             return info;
         }
 
         //均满足则返回完整的User对象
         info.setFlag(true);
         info.setData(user);
+        sqlSession.close();
         return info;
 
     }

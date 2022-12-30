@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.saladday.travel.dao.mapper.RouteMapper">
+
+
+    <select id="findCount" resultType="java.lang.Integer">
+        <bind name="_rname" value="'%'+rname+'%'"/>
+        select count(rid)
+        from tab_route
+        <where>
+            <if test="rname != null and rname!=''">and rname like #{_rname}</if>
+            <if test="cid != null and cid != 0">and cid = #{cid}</if>
+        </where>
+    </select>
+
+
+    <select id="findByPage" resultType="cn.saladday.travel.domain.Route">
+        <bind name="_rname" value="'%'+rname+'%'"/>
+        select *
+        from tab_route
+        where
+            <if test="cid==0"> rname like #{_rname} limit #{start},#{pageSize}</if>
+            <if test="cid!=0"> rname like #{_rname} and cid = #{cid} limit  #{start},#{pageSize}</if>
+
+    </select>
+
+    <select id="findByRid" resultType="cn.saladday.travel.domain.Route">
+        SELECT * FROM tab_route WHERE rid = #{rid}
+    </select>
+</mapper>

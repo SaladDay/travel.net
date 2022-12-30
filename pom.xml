@@ -112,21 +112,29 @@
             <artifactId>jedis</artifactId>
             <version>2.7.0</version>
         </dependency>
+<!--        myBatis-->
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.5.9</version>
+        </dependency>
 
     </dependencies>
 
 
     <build>
+        <finalName>travel</finalName>
         <!--maven插件-->
         <plugins>
             <!--jdk编译插件-->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                     <encoding>utf-8</encoding>
                 </configuration>
             </plugin>
@@ -136,6 +144,8 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.3.1</version>
             </plugin>
+
+
 
             <plugin>
                 <groupId>org.apache.tomcat.maven</groupId>
