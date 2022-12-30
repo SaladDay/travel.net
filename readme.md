@@ -20,4 +20,4 @@
 - Mysql
 - Druid
 - BeanUtil
-- SpringJDBCTemplate
+- SpringJDBCTemplate---后版本更换为mybatis
